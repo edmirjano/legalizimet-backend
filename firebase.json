@@ -1,0 +1,19 @@
+{
+  "hosting": {
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/getHistory",
+        "function": "historyFunc"
+      },
+      {
+        "source": "/getResult",
+        "function": "resultFunc"
+      }
+    ]
+  }
+}
