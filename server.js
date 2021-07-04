@@ -37,6 +37,14 @@ app.get('/getHistory', (req, res) => {
     })
 })
 
+app.get('/', (req, res) => {
+  var historyRef = database.ref('history');
+
+  historyRef.once('value', function (snap) {
+      res.status(200).json({"legals": snap.val()});
+  })
+})
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
