@@ -16,11 +16,12 @@ app.use(cors())
 
 app.post('/getResult', (req, res) => {
     let dataToRun = getDataToRun(req.body);
-
+    console.log(dataToRun);
     trainBrain().then((data) => {
         net.train(data);
 
         let result = net.run(dataToRun);
+        console.log(result);
         req.body.result = result[0];
         req.body.output = Math.round(result[0]);
 

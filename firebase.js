@@ -30,7 +30,7 @@ let trainBrain = async function () {
       };
   });
 
-  let legals = data ?. legals;
+  let legals = data.legals;
   for (var key in legals) {
       let legal = legals[key];
       if (legals.hasOwnProperty(key)) {
@@ -92,9 +92,30 @@ let getDataToRun = function getDataToRun(userData){
 
 
 let addData = function addData(data){
+//   let rootRef = database.ref();
+// rootRef.set(null)
+//   .then(() => {
+//     console.log("All data deleted successfully!");
+//   })
+//   .catch((error) => {
+//     console.error("Error deleting data:", error);
+//   });
   var historyRef = database.ref('history');
   historyRef.push(data).then((data)=>{
       console.log("added to database");
+  });
+  historyRef.once("value", (snapshot) => {
+    const length = snapshot.numChildren();
+    console.log("Number of children:", length);
+    snapshot.forEach((childSnapshot) => {
+      const data = childSnapshot.val();
+      historyRef.push().set(data) // Use push to generate a new unique key
+        .then(() => {
+        })
+        .catch((error) => {
+          console.error("Error duplicating data:", error);
+        });
+    });
   });
 }
 
